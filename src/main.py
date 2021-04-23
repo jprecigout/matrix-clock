@@ -49,9 +49,6 @@ spi = SPI(1, baudrate=10000000, polarity=1, phase=0, sck=Pin(clk), mosi=Pin(din)
 display = max7219.Matrix8x8(spi, Pin(cs), 4)
 display.brightness(DISPLAY_BRIGHTNESS)
 
-ntptime.settime()
-timezone_hour = 2  # timezone offset (hours)
-
 # Read secret
 try:
     with open('secrets.json') as fp:
@@ -64,6 +61,9 @@ try:
     connect_network(secrets["wifi"]["ssid"], secrets["wifi"]["password"])
 except OSError as e:
     print("Network connection is not possible")
+
+ntptime.settime()
+timezone_hour = 2  # timezone offset (hours)
 
 timer_clock  = Timer(-1)
 timer_clock.init(period=CLOCK_TIMER_DELAY,
